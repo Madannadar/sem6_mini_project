@@ -2,7 +2,7 @@ from ultralytics import YOLO
 import cv2
 
 MODEL_PATH = "best.pt"
-IMAGE_PATH = r"D:\Coding\NextJS\Projects\sem6 mini project\container\weights\testdata.jpg"
+IMAGE_PATH = r""
 
 def detect_and_display(image_path):
     model = YOLO(MODEL_PATH)

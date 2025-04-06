@@ -1,9 +1,8 @@
-fastapi
-uvicorn[standard]
+flask
+flask_cors
+gunicorn
 pillow
 python-multipart
 torch
 opencv-python
-flask
-flask_cors
 ultralytics
