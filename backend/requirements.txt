@@ -6,3 +6,4 @@ torch
 opencv-python
 flask
 flask_cors
+ultralytics
