@@ -15,7 +15,8 @@ MODEL_PATH = os.path.join(BASE_DIR, "container", "weights", "best.pt")
 
 # Initialize Flask app and model
 app = Flask(__name__)
-CORS(app, resources={r"/detect": {"origins": "https://sem6-mini-project.vercel.app"}})
+CORS(app, origins=["https://sem6-mini-project.vercel.app"])
+
 model = YOLO(MODEL_PATH)
 
 @app.route('/detect', methods=['POST'])
