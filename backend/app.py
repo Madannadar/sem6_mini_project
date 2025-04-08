@@ -11,9 +11,12 @@ import uuid
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
 
-# Get model path dynamically (relative)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "container", "weights", "best.pt")
+# Ensure model file exists
+MODEL_DIR = os.path.join("container", "weights")
+MODEL_PATH = os.path.join(MODEL_DIR, "best.pt")
+
+if not os.path.exists(MODEL_PATH):
+    raise FileNotFoundError(f"Model not found at {MODEL_PATH}. Make sure it's downloaded before starting the app.")
 
 # Load model
 model = YOLO(MODEL_PATH)
@@ -48,5 +51,5 @@ def detect():
     return send_file(buf, mimetype='image/jpeg')
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Let Render assign the port
+    port = int(os.environ.get("PORT", 5000))  # Use Render-assigned port
     app.run(debug=False, host='0.0.0.0', port=port)
