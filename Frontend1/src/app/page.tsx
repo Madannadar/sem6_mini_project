@@ -23,7 +23,7 @@ export default function DetectPage() {
     setIsLoading(true);
 
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_URL!, {
+      const res = await fetch("https://sem6-mini-project.onrender.com", {
         method: 'POST',
         body: formData,
       });
