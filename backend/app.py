@@ -9,8 +9,16 @@ import os
 import uuid
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "https://sem6-mini-project.vercel.app"]}})
 
+# Enable CORS for specific origins
+CORS(app)
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = 'https://sem6-mini-project.vercel.app'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    return response
 
 # Ensure model file exists
 MODEL_DIR = os.path.join("container", "weights")
@@ -19,7 +27,7 @@ MODEL_PATH = os.path.join(MODEL_DIR, "best.pt")
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"Model not found at {MODEL_PATH}. Make sure it's downloaded before starting the app.")
 
-# Load model
+# Load YOLO model
 model = YOLO(MODEL_PATH)
 
 @app.route('/')
