@@ -10,7 +10,8 @@ import uuid
 
 # Construct dynamic model path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, r"D:\Coding\NextJS\Projects\sem6 mini project\backend\container\weights\best.pt")
+MODEL_PATH = os.path.join(BASE_DIR, "container", "weights", "best.pt")
+
 
 # Initialize Flask app and model
 app = Flask(__name__)
