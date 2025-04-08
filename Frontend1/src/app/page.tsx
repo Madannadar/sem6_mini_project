@@ -23,7 +23,7 @@ export default function DetectPage() {
     setIsLoading(true);
 
     try {
-      const res = await fetch('http://localhost:5000/detect', {
+      const res = await fetch('https://sem6-mini-project.onrender.com', {
         method: 'POST',
         body: formData,
       });
