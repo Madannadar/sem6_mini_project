@@ -39,9 +39,9 @@ seaborn==0.13.2
 six==1.17.0
 sympy==1.13.1
 tldextract==5.2.0
-torch==2.2.2+cpu
-torchaudio==2.2.2+cpu
-torchvision==0.17.2+cpu
+torch==2.1.0
+torchaudio==2.1.0
+torchvision==0.16.0
 tqdm==4.67.1
 typing_extensions==4.13.1
 tzdata==2025.2
