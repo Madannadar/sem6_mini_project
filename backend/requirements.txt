@@ -1,8 +1,7 @@
 flask
-flask_cors
-gunicorn
-pillow
-python-multipart
-torch
-opencv-python
+flask-cors
 ultralytics
+opencv-python
+Pillow
+numpy
+gunicorn
