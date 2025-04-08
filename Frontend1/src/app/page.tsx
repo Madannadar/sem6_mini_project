@@ -9,7 +9,7 @@ export default function DetectPage() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setImageFile(e.target.files[0]);
+      setImageFile(e.target.files[0]); 
       setOutputUrl(null); // Reset output
     }
   };
@@ -23,7 +23,7 @@ export default function DetectPage() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("https://sem6-mini-project.onrender.com/detect", {
+      const res = await fetch('http://localhost:5000/detect', {
         method: 'POST',
         body: formData,
       });

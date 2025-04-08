@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, send_file
 from flask_cors import CORS
 from ultralytics import YOLO
@@ -6,17 +5,14 @@ import cv2
 from PIL import Image
 import numpy as np
 import io
+import os
 import uuid
 
-# Construct dynamic model path
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "container", "weights", "best.pt")
-
-
-# Initialize Flask app and model
 app = Flask(__name__)
-CORS(app)
-model = YOLO(MODEL_PATH)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+# Load model from container/weights
+model = YOLO(r"D:\Coding\NextJS\Projects\sem6 mini project\backend\container\weights\best.pt")
 
 @app.route('/detect', methods=['POST'])
 def detect():
@@ -36,15 +32,6 @@ def detect():
     # Run inference
     results = model(temp_filename, device='cpu')
     output_img = results[0].plot()
-
-    # 🔍 Print detections and confidence
-    print("\n--- Detection Results ---")
-    for box in results[0].boxes:
-        cls_id = int(box.cls[0])
-        conf = float(box.conf[0])
-        label = results[0].names[cls_id]
-        print(f"Detected {label} with {conf:.2%} confidence")
-    print("-------------------------\n")
 
     # Convert and send image
     pil_img = Image.fromarray(cv2.cvtColor(output_img, cv2.COLOR_BGR2RGB))
