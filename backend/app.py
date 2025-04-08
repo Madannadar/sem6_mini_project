@@ -9,7 +9,8 @@ import os
 import uuid
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
+CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "https://sem6-mini-project.vercel.app"]}})
+
 
 # Ensure model file exists
 MODEL_DIR = os.path.join("container", "weights")
