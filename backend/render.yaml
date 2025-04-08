@@ -3,10 +3,12 @@ services:
     name: yolo-flask-api
     env: python
     plan: free
-    region: oregon  # or choose closest: oregon / frankfurt
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app"
+    region: oregon  # can also be frankfurt if you're closer to Europe
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
     envVars:
       - key: PYTHON_VERSION
         value: 3.10
+      - key: FLASK_ENV
+        value: production
     autoDeploy: true

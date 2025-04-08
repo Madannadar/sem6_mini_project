@@ -9,10 +9,18 @@ import os
 import uuid
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
 
-# Load model from container/weights
-model = YOLO(r"D:\Coding\NextJS\Projects\sem6 mini project\backend\container\weights\best.pt")
+# Get model path dynamically (relative)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "container", "weights", "best.pt")
+
+# Load model
+model = YOLO(MODEL_PATH)
+
+@app.route('/')
+def home():
+    return "✅ Flask YOLO backend is running!"
 
 @app.route('/detect', methods=['POST'])
 def detect():
@@ -24,16 +32,13 @@ def detect():
     img_array = np.frombuffer(image_bytes, np.uint8)
     img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
 
-    # Save temporarily
     os.makedirs("temp", exist_ok=True)
     temp_filename = f"temp/{uuid.uuid4().hex}.jpg"
     cv2.imwrite(temp_filename, img)
 
-    # Run inference
     results = model(temp_filename, device='cpu')
     output_img = results[0].plot()
 
-    # Convert and send image
     pil_img = Image.fromarray(cv2.cvtColor(output_img, cv2.COLOR_BGR2RGB))
     buf = io.BytesIO()
     pil_img.save(buf, format='JPEG')
@@ -43,4 +48,5 @@ def detect():
     return send_file(buf, mimetype='image/jpeg')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Let Render assign the port
+    app.run(debug=False, host='0.0.0.0', port=port)
