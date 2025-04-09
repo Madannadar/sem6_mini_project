@@ -10,15 +10,8 @@ import uuid
 
 app = Flask(__name__)
 
-# Enable CORS for specific origins
-CORS(app)
-
-@app.after_request
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = 'https://sem6-mini-project.vercel.app'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-    return response
+# ✅ Proper CORS setup for specific frontend
+CORS(app, origins=["https://sem6-mini-project.vercel.app/"])
 
 # Ensure model file exists
 MODEL_DIR = os.path.join("container", "weights")
@@ -27,7 +20,7 @@ MODEL_PATH = os.path.join(MODEL_DIR, "best.pt")
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"Model not found at {MODEL_PATH}. Make sure it's downloaded before starting the app.")
 
-# Load YOLO model
+# Load model
 model = YOLO(MODEL_PATH)
 
 @app.route('/')
@@ -60,5 +53,5 @@ def detect():
     return send_file(buf, mimetype='image/jpeg')
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Use Render-assigned port
+    port = int(os.environ.get("PORT", 5000))  # For Render
     app.run(debug=False, host='0.0.0.0', port=port)
