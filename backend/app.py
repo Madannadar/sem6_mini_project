@@ -11,7 +11,7 @@ import uuid
 app = Flask(__name__)
 
 # ✅ Proper CORS setup for specific frontend
-CORS(app, origins=["https://sem6-mini-project.vercel.app/"])
+CORS(app, origins=["https://sem6-mini-project.vercel.app"])
 
 # Ensure model file exists
 MODEL_DIR = os.path.join("container", "weights")
